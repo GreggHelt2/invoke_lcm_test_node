@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "version": "1.0.0"
+  },
+  "name": "",
+  "author": "",
+  "description": "",
+  "notes": "",
+  "tags": "",
+  "contact": "",
+  "version": "",
+  "exposedFields": [],
+  "nodes": [
+    {
+      "id": "14836e30-4ebc-4d0e-899c-33f787436040",
+      "type": "invocation",
+      "data": {
+        "id": "14836e30-4ebc-4d0e-899c-33f787436040",
+        "type": "latent_consistency_mononode",
+        "inputs": {
+          "prompt": {
+            "id": "2c2a76e3-c07a-4c65-af5e-78286101843c",
+            "name": "prompt",
+            "type": "string",
+            "fieldKind": "input",
+            "label": "",
+            "value": "astronaut riding a horse on the moon"
+          },
+          "num_inference_steps": {
+            "id": "2b0e79f2-daf6-42db-8da8-56769b0d5d71",
+            "name": "num_inference_steps",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 8
+          },
+          "guidance_scale": {
+            "id": "42f7725c-cd66-4bb5-94e8-e2c1879e8070",
+            "name": "guidance_scale",
+            "type": "float",
+            "fieldKind": "input",
+            "label": "",
+            "value": 8
+          },
+          "batches": {
+            "id": "f3d6deaa-fb56-40e4-bfa2-ef05d5f87fdf",
+            "name": "batches",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 3
+          },
+          "images_per_batch": {
+            "id": "eace4a0c-965f-49e3-8691-5dde164e9a42",
+            "name": "images_per_batch",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 2
+          },
+          "seeds": {
+            "id": "b1b45367-a77f-4049-a69f-909ca083a3d3",
+            "name": "seeds",
+            "type": "IntegerCollection",
+            "fieldKind": "input",
+            "label": "",
+            "value": []
+          },
+          "lcm_origin_steps": {
+            "id": "f5ab851c-e2a0-42d5-b6ce-b512454f8f16",
+            "name": "lcm_origin_steps",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 50
+          },
+          "width": {
+            "id": "357bec5c-cb97-4ac9-b967-34af23887d58",
+            "name": "width",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 512
+          },
+          "height": {
+            "id": "a96dcab1-de6e-4ea3-9770-7ebdade6acfa",
+            "name": "height",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 512
+          },
+          "precision": {
+            "id": "400485f0-d00e-4c82-87a8-86ef57889174",
+            "name": "precision",
+            "type": "enum",
+            "fieldKind": "input",
+            "label": "",
+            "value": "fp16"
+          },
+          "board": {
+            "id": "71c73346-b020-464a-b892-071ea1bff840",
+            "name": "board",
+            "type": "BoardField",
+            "fieldKind": "input",
+            "label": ""
+          }
+        },
+        "outputs": {
+          "collection": {
+            "id": "54cf8523-91ba-4dfd-894d-fcb9372f13a2",
+            "name": "collection",
+            "type": "ImageCollection",
+            "fieldKind": "output"
+          }
+        },
+        "label": "",
+        "isOpen": true,
+        "notes": "",
+        "embedWorkflow": false,
+        "isIntermediate": false,
+        "useCache": false,
+        "version": "1.0.0"
+      },
+      "width": 320,
+      "height": 773,
+      "position": {
+        "x": -253.3834099936248,
+        "y": -443.52275131290287
+      }
+    },
+    {
+      "id": "7c4044c0-94b9-4c52-af72-ed2b9134e7c0",
+      "type": "invocation",
+      "data": {
+        "id": "7c4044c0-94b9-4c52-af72-ed2b9134e7c0",
+        "type": "range",
+        "inputs": {
+          "start": {
+            "id": "5ad01ba7-077f-4a86-a217-619868ee96b6",
+            "name": "start",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 1000
+          },
+          "stop": {
+            "id": "3f41c163-1153-43ff-b3ab-c3bb1acdf7c2",
+            "name": "stop",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 1010
+          },
+          "step": {
+            "id": "e9d667b2-45ca-45a6-8444-378304646dbf",
+            "name": "step",
+            "type": "integer",
+            "fieldKind": "input",
+            "label": "",
+            "value": 1
+          }
+        },
+        "outputs": {
+          "collection": {
+            "id": "f6b9a043-1763-44cf-b774-0a74c4e6a78b",
+            "name": "collection",
+            "type": "IntegerCollection",
+            "fieldKind": "output"
+          }
+        },
+        "label": "",
+        "isOpen": true,
+        "notes": "",
+        "embedWorkflow": false,
+        "isIntermediate": true,
+        "useCache": false,
+        "version": "1.0.0"
+      },
+      "width": 320,
+      "height": 275,
+      "position": {
+        "x": -641.8427734659854,
+        "y": -443.5744504355803
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "7c4044c0-94b9-4c52-af72-ed2b9134e7c0",
+      "sourceHandle": "collection",
+      "target": "14836e30-4ebc-4d0e-899c-33f787436040",
+      "targetHandle": "seeds",
+      "id": "reactflow__edge-7c4044c0-94b9-4c52-af72-ed2b9134e7c0collection-14836e30-4ebc-4d0e-899c-33f787436040seeds",
+      "type": "default"
+    }
+  ]
+}
