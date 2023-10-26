@@ -47,12 +47,10 @@ class LatentConsistencyInvocation(BaseInvocation,
     width: int = InputField(description="The width to use", default=512)
     height: int = InputField(description="The height to use", default=512)
     precision: TORCH_PRECISION = InputField(default="fp16", description="floating point precision")
-
     board: BoardField = InputField(default=None, description=FieldDescriptions.board, input=Input.Direct)
 
     def invoke(self, context: InvocationContext) -> ImageCollectionOutput:
         dtype = torch.float16 if self.precision == "fp16" else torch.float32
-        print("dtype:", dtype)
         # trick of using LCMScheduler.from_pretrained() is from
         # https://huggingface.co/spaces/SimianLuo/Latent_Consistency_Model/blob/main/easy_run.py
         lcm_scheduler = LCMScheduler.from_pretrained("SimianLuo/LCM_Dreamshaper_v7", subfolder="scheduler")
@@ -60,41 +58,20 @@ class LatentConsistencyInvocation(BaseInvocation,
                                                               scheduler=lcm_scheduler,
                                                               torch_dtype=dtype,
                                                               )
-        # # To save GPU memory, torch.float16 can be used, but it may compromise image quality.
-        # pipe.to(torch_device="cuda", torch_dtype=torch.float32)
+        # From LatentConsistencyModelPipleine:
+        #      To save GPU memory, torch.float16 can be used, but it may compromise image quality.
         pipe.to(torch_device="cuda", torch_dtype=dtype)
-        #
-        # prompt = "Self-portrait oil painting, a beautiful cyborg with golden hair, 8k"
-        #
-        # # Can be set to 1~50 steps. LCM support fast inference even <= 4 steps. Recommend: 1~8 steps.
         all_images = []
         total_images = self.batches * self.images_per_batch
-        if (self.seeds is None) or (len(self.seeds) < total_images):
-            if self.seeds is None:
-                print("No seed input, using random seeds")
-            else:
-                print("Not enough seeds, using random seeds")
-            all_generators = [torch.Generator(device="cuda").manual_seed(k) for k in range(total_images)]
-        else:
-            exact_seeds = self.seeds[0:total_images]
-            print("exact_seeds size:", len(exact_seeds))
-            print("exact_seeds:", exact_seeds)
         start_inference = time.time()
 
         for i in range(self.batches):
             if self.seeds is not None and len(self.seeds) >= total_images:
-                print("batch: ", i)
                 batch_seeds = self.seeds[i * self.images_per_batch : (i + 1) * self.images_per_batch]
-                print("batch_seeds size:", len(batch_seeds))
-                print("batch seeds:", batch_seeds)
-                # batch_generators = [torch.Generator(device="cuda").manual_seed(k) for k in range(self.images_per_batch)]
                 batch_generators = [torch.Generator(device="cuda").manual_seed(k) for k in batch_seeds]
             else:
-                print("setting batch_generators to None")
                 # batch_generators = [torch.Generator(device="cuda").manual_seed(k) for k in range(self.images_per_batch)]
-                batch_generators = None
-            print("batch:", i)
-            print("batch_generators:", batch_generators)
+                batch_generators = None   # with generators, pipeline will use default random seeds
             images = pipe(num_images_per_prompt=self.images_per_batch,
                           prompt=self.prompt,
                           generator=batch_generators,
